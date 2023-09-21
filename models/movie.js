@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+
 const movieSchema = new mongoose.Schema(
   {
     country: {
@@ -30,14 +31,16 @@ const movieSchema = new mongoose.Schema(
       },
       required: [true, 'Поле "ссылка на постер" должно быть заполнено'],
     },
-    trailerLink: {type: String,
+    trailerLink: {
+      type: String,
       validate: {
         validator: (v) => validator.isURL(v),
         message: 'Некорректный URL',
       },
       required: [true, 'Поле "ссылка на трейлер" должно быть заполнено'],
     },
-    thumbnail: {type: String,
+    thumbnail: {
+      type: String,
       validate: {
         validator: (v) => validator.isURL(v),
         message: 'Некорректный URL',
@@ -61,7 +64,7 @@ const movieSchema = new mongoose.Schema(
       required: [true, 'Поле "название" должно быть заполнено'],
     },
   },
-  //{ versionKey: false },
+  { versionKey: false },
 );
 
 module.exports = mongoose.model('movie', movieSchema);

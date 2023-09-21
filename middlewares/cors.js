@@ -2,8 +2,6 @@ const allowedCors = [
   'https://praktikum.tk',
   'http://praktikum.tk',
   'localhost:3000',
-  // 'https://valentina.students.nomoredomainsicu.ru',
-  // 'http://valentina.students.nomoredomainsicu.ru',
 ];
 
 const cors = (req, res, next) => {
