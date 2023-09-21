@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth');
 const userRouter = require('./users');
 const movieRouter = require('./movies');
 const NotFoundError = require('../middlewares/errors/NotFoundError');
-const pageNotFoundText = require('../utils/errorsTexts');
+const { pageNotFoundText } = require('../utils/errorsTexts');
 
 router.post('/signin', signInValidation, login);
 router.post('/signup', signUpValidation, createUser);
