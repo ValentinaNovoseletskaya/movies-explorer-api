@@ -2,7 +2,12 @@ const movie = require('../models/movie');
 const NotFoundError = require('../middlewares/errors/NotFoundError');
 const ValidationError = require('../middlewares/errors/ValidationError');
 const OwnerError = require('../middlewares/errors/OwnerError');
-const { validationErrorText, castErrorText, movieNotFoundText } = require('../utils/errorsTexts');
+const {
+  validationErrorText,
+  castErrorText,
+  ownerErrorText,
+  movieNotFoundText,
+} = require('../utils/errorsTexts');
 
 module.exports.getMovies = (req, res, next) => {
   const userId = req.user._id;
@@ -51,7 +56,7 @@ module.exports.deleteMovie = (req, res, next) => {
     .orFail(new NotFoundError(movieNotFoundText))
     .then((data) => {
       if (data.owner !== userId) {
-        const err = new OwnerError(castErrorText);
+        const err = new OwnerError(ownerErrorText);
         next(err);
         return;
       }
@@ -62,7 +67,7 @@ module.exports.deleteMovie = (req, res, next) => {
     })
     .catch((e) => {
       if (e.name === 'CastError') {
-        const err = new ValidationError(validationErrorText);
+        const err = new ValidationError(castErrorText);
         next(err);
       } else {
         next(e);

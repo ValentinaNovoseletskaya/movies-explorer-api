@@ -9,9 +9,10 @@ const { pageNotFoundText } = require('../utils/errorsTexts');
 
 router.post('/signin', signInValidation, login);
 router.post('/signup', signUpValidation, createUser);
-router.use('/users', auth, userRouter);
-router.use('/movies', auth, movieRouter);
-router.get('/signout', auth, logout);
+router.use(auth);
+router.get('/signout', logout);
+router.use('/users', userRouter);
+router.use('/movies', movieRouter);
 
 router.use('*', (req, res, next) => {
   const err = new NotFoundError(pageNotFoundText);
