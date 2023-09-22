@@ -2,6 +2,8 @@
 
 ### [Ссылка на проект в GitHub](https://github.com/ValentinaNovoseletskaya/movies-explorer-api)
 
+## Ссылка на api проекта - `https://api.moviexplore.nomoredomainsrocks.ru`
+
 ## Директории
 
 `/routes` — папка с файлами роутера  
