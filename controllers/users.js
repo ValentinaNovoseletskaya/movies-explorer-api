@@ -97,7 +97,7 @@ module.exports.login = (req, res, next) => {
         payload,
         NODE_ENV === 'production' ? JWT_SECRET : config.JWT_SECRET,
       );
-      return res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 }).status(200).json({ token });
+      return res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'none', secure: true }).status(200).json({ token });
     })
     .catch(next);
 };
