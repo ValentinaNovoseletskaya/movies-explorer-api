@@ -68,7 +68,17 @@ module.exports.createUser = (req, res, next) => {
         const {
           name, id, email,
         } = data;
-        return res.status(201).send({
+        const { NODE_ENV, JWT_SECRET } = process.env;
+        const payload = {
+          _id: id,
+        };
+        const token = jwt.sign(
+          payload,
+          NODE_ENV === 'production' ? JWT_SECRET : config.JWT_SECRET,
+        );
+        return res.cookie('token', token, {
+          httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'none', secure: true,
+        }).status(201).send({
           name, _id: id, email,
         });
       })
@@ -97,7 +107,9 @@ module.exports.login = (req, res, next) => {
         payload,
         NODE_ENV === 'production' ? JWT_SECRET : config.JWT_SECRET,
       );
-      return res.cookie('token', token, { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'none', secure: true }).status(200).json({ token });
+      return res.cookie('token', token, {
+        httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'none', secure: true,
+      }).status(200).json({ token });
     })
     .catch(next);
 };
